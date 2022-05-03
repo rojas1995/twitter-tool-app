@@ -1,1 +1,3 @@
-twitter_app/twitter_app/__pycache__/*
+twitter_app/twitter_app/__pycache__/**
+twitter_app/twitter_app/__pycache__/
+
