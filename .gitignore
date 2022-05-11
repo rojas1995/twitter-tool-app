@@ -1,3 +1,8 @@
 twitter_app/twitter_app/__pycache__/**
 twitter_app/twitter_app/__pycache__/
 *.env
+twitter_app/response.txt
+twitter_app/api/__pycache__/
+twitter_app/api/__pycache__/**
+twitter_app/api/migrations/__pycache__/**
+twitter_app/api/migrations/__pycache__/
