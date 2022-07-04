@@ -6,3 +6,5 @@ twitter_app/api/__pycache__/
 twitter_app/api/__pycache__/**
 twitter_app/api/migrations/__pycache__/**
 twitter_app/api/migrations/__pycache__/
+twitter_app/api/migrations/
+twitter_app/api/migrations/**

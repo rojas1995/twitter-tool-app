@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DigitalOcean Droplets</title>
+    <link crossorigin="anonymous"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css"
+          integrity="sha256-8B1OaG0zT7uYA572S2xOxWACq9NXYPQ+U5kHPV1bJN4="
+          rel="stylesheet"/>
+    <link rel="shortcut icon" type="image/png" href="https://assets.digitalocean.com/logos/favicon.png"/>
+</head>
+<body>
+<form action="{% url 'Data Form View' %}" method="POST" autocomplete="on">
+    {% csrf_token %}
+
+    <label>Termino de busqueda</label>
+    {{ form.term }}
+    <strong style="color: red">{{form.term.errors }}</strong>
+
+    <h2>Terminos opcionales</h2>
+    <label>Pais</label>
+
+
+    {{form.country}}
+    <strong style="color: red">{{form.country.errors }}</strong>
+    <br>
+    <label>idioma</label>
+    {{form.lang}}
+    <strong style="color: red">{{form.lang.errors }}</strong>
+    <br>
+    <label>twits referenciados</label>
+    {{form.referenced_tweets}}
+    <br>
+    <label>fuente del tweet</label>
+    {{form.source}}
+    <br>
+    <label>place information</label>
+    {{form.place}}
+    <br>
+    <label>number of tweets that will be collected (min 10, max 10.000)</label>
+    {{form.num_tw}}
+    <strong style="color: red">{{form.num_tw.errors }}</strong>
+    <br>
+    <label>priority of search (1 higher, 5 lower)</label>
+    {{form.priority}}
+    <strong style="color: red">{{form.priority.errors }}</strong>
+    <br>
+
+    <input type="submit" name="send" value="send">
+
+</form>
+</body>
+</html>

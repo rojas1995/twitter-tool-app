@@ -15,9 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from api.views import GetAPIData
+from api import views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', GetAPIData.as_view(template_name='data_view.html'), name='Data View'),
+    path('', views.GetAPIData.as_view(template_name='data_view.html'), name='Data View'),
+    path('form/', views.GetForm.as_view(template_name='request_form.html'), name='Data Form View'),
+    path('success/', views.GetForm.as_view(template_name='success_form.html'), name='success')
+
 ]
