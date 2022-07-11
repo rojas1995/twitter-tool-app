@@ -21,22 +21,20 @@ class ApiService():
         url = "https://api.twitter.com/2/tweets/search/recent"
 
         response = requests.get(url, auth=ApiService.bearer_oauth, params=params)
-        print(response.request.url)
-        print(response.request.headers)
-        print(response.status_code)
+
         if response.status_code != 200:
             raise Exception(response.status_code, response.text)
-        # return response.json()
+
+        ''' write response json on file to debug
         response_json = json.dumps(response.json(), indent=4, sort_keys=True)
+        
         with open('response.txt', 'w') as handle:
             handle.write(response_json)
             handle.write('===========================================')
-            handle.write('\n')
+            handle.write('\n')'''
         return response
 
-    def do_request(self):
-
-        job = models.Job.objects.order_by('priority')[0]
+    def do_request(job):
 
         lang = 'lang:' + job.lang
         country = 'country:' + job.country
@@ -54,12 +52,14 @@ class ApiService():
                         'place.fields': place_info,
                         'max_results': num_tw}
 
-
         response = ApiService.get_data(query_params)
         if response.status_code == 200:
+            LoggingService.update_job_log(job, True)
             JobService.delete(job.id)
+
         else:
-            return 'For now the requests are not working'
+            LoggingService.update_job_log(job, False)
+
     def schedule_request(params, user):
         num_request_with_max_results = int(params['num_tw']) // 180
         rest_request = int(params['num_tw']) % 180
@@ -68,7 +68,6 @@ class ApiService():
             job = JobService.instance_job_without_results(params, user)
             job.num_tw = 180
             JobService.create(job)
-            # time.sleep((15 * 60) + 1)
 
         job_rest = JobService.instance_job_without_results(params, user)
         job_rest.num_tw = rest_request
@@ -90,3 +89,22 @@ class JobService():
         job = models.Job.objects.get(id=id)
         job.full_clean()
         job.delete()
+
+    def get_next_job():
+        job = models.Job.objects.order_by('priority', 'create_at')[0]
+        return job
+
+
+class LoggingService():
+
+    def update_job_log(job: models.Job, success):
+        log = models.JobLog(user=job.user, term=job.term, country=job.country, lang=job.lang,
+                            place=job.place, priority=job.priority,
+                            referenced_tweets=job.referenced_tweets, source=job.source, job_id=job.id,
+                            execution_success=success, num_tw=job.num_tw, create_at=job.create_at)
+
+        LoggingService.create(log)
+
+    def create(log: models.JobLog):
+        log.full_clean()
+        log.save()
