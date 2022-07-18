@@ -129,5 +129,5 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRONJOBS = [
-    ('* * * * *', 'twitter_app.cron.scheduled_job')
+    ('15 * * * *', 'twitter_app.cron.scheduled_job')
 ]

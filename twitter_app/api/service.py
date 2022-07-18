@@ -5,6 +5,7 @@ import requests
 import json
 from django.contrib.auth.models import User
 from . import models
+from google import pubsub_v1
 
 
 class ApiService():
@@ -108,3 +109,22 @@ class LoggingService():
     def create(log: models.JobLog):
         log.full_clean()
         log.save()
+
+
+class PubSubService():
+
+    def create_topic():
+        project_id = os.getenv('APPLICATION_ID')
+
+        publisher = pubsub_v1.PublisherClient()
+        project_path = f"projects/{project_id}"
+        exists = False
+        for topic in publisher.list_topics(request={"project": project_path}):
+            print(topic)
+            if topic.name == 'twitter_messages':
+                exists = True
+
+        if not exists:
+            topic_path = publisher.topic_path(project_id, 'twitter_messages')
+            topic = publisher.create_topic(request={"name": topic_path})
+            print(f"created topic: "+topic.name)
