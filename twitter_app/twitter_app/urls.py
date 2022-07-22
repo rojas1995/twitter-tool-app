@@ -14,14 +14,24 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
+from django.contrib.auth import login
 from api import views
 
 
 urlpatterns = [
+    path('auth/', include('django.contrib.auth.urls')),
+    path('auth/login', login),
     path('admin/', admin.site.urls),
-    path('', views.GetAPIData.as_view(template_name='data_view.html'), name='Data View'),
+    path('', views.GetAPIData.as_view(template_name='home.html'), name='home'),
+    path('jobs/', views.GetAPIData.as_view(template_name='data_view.html'), name='Data View'),
     path('form/', views.GetForm.as_view(template_name='request_form.html'), name='Data Form View'),
     path('success/', views.GetForm.as_view(template_name='success_form.html'), name='success')
 
 ]
+
+handler404 = 'api.views.error_404_view'
+
+
+
+

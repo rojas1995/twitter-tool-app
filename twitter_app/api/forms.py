@@ -52,38 +52,4 @@ class APIForm(forms.Form):
         return clean_data
 
 
-'''class SearchHomeForm(forms.Form):
-    location = forms.CharField(required=False, widget=forms.TextInput(
-        attrs={'placeholder': "Localidad", 'class': "input-field autocomplete ", 'id': "autocomplete-input"}))
-    date = forms.DateField(
-        required=False,
-        widget=forms.DateInput(
-            format=settings.DATE_INPUT_FORMATS[0],
-            attrs={'placeholder': DATE_PLACEHOLDER}
-        ),
-        input_formats=settings.DATE_INPUT_FORMATS
-    )
-    start_hour = forms.TimeField(
-        required=False,
-        widget=forms.TimeInput(
-            format='%H:%M',
-            attrs={'placeholder': "hh:mm"}
-        ),
-        input_formats=('%H:%M',)
-    )
-    latitude = forms.DecimalField(required=False, widget=forms.HiddenInput())
-    longitude = forms.DecimalField(required=False, widget=forms.HiddenInput())
 
-    def clean_date(self):
-        date = self.cleaned_data.get('date')
-        if date and date < now().date():
-            raise ValidationError(
-                'La fecha debe ser futura')
-        return date
-
-    def clean_location(self):
-        location = self.cleaned_data.get('location')
-        location_join = location.replace(' ', '')
-        if not location_join.isalpha() and location:
-            raise ValidationError('Introduzca solo letras y espacios')
-        return location'''

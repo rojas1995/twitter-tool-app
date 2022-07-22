@@ -1,0 +1,22 @@
+{% extends "admin/base_site.html" %}
+
+{% block title %}
+Twitter app
+{{ block.super }}
+
+{% endblock %}
+{% block site_title %}
+Twitter app
+{{ block.super }}
+
+{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'home' %}">{{ site_header|default:_('Twitter app') }}</a></h1>
+{% endblock %}
+
+{% block content %}
+<a href="{% url 'admin:login' %}">
+<input type="submit" name="Login button" value="Login >">
+</a>
+{% endblock %}

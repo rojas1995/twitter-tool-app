@@ -57,6 +57,7 @@ class ApiService():
         if response.status_code == 200:
             LoggingService.update_job_log(job, True)
             JobService.delete(job.id)
+            return response.json()
 
         else:
             LoggingService.update_job_log(job, False)
@@ -92,7 +93,7 @@ class JobService():
         job.delete()
 
     def get_next_job():
-        job = models.Job.objects.order_by('priority', 'create_at')[0]
+        job = models.Job.objects.order_by('priority', 'create_at').first()
         return job
 
 
@@ -115,7 +116,7 @@ class PubSubService():
 
     def create_topic():
         project_id = os.getenv('APPLICATION_ID')
-
+        print("project_id: "+project_id)
         publisher = pubsub_v1.PublisherClient()
         project_path = f"projects/{project_id}"
         exists = False
@@ -128,3 +129,11 @@ class PubSubService():
             topic_path = publisher.topic_path(project_id, 'twitter_messages')
             topic = publisher.create_topic(request={"name": topic_path})
             print(f"created topic: "+topic.name)
+
+    def publish(message):
+        project_id = os.getenv('APPLICATION_ID')
+        publisher = pubsub_v1.PublisherClient()
+        topic_path = publisher.topic_path(project_id, 'twitter_messages')
+        future = publisher.publish(topic_path, message)
+        print("messages published: "+future.result())
+

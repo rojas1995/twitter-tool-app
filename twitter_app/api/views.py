@@ -11,16 +11,19 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
 
+def error_404_view(request, exception):
+    return render(request,'404.html')
+
+
+class HomeView(TemplateView):
+    template_name = 'home.html'
+
 class GetAPIData(TemplateView):
     template_name = 'data_view.html'
 
     def get(self, request, *args, **kwargs):
-
         job = JobService.get_next_job()
-
         return render(request, self.template_name, {'data': job})
-
-
 
 
 @method_decorator(login_required, name='dispatch')
