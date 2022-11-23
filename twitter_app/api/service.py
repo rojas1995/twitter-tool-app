@@ -63,12 +63,12 @@ class ApiService():
             LoggingService.update_job_log(job, False)
 
     def schedule_request(params, user):
-        num_request_with_max_results = int(params['num_tw']) // 180
-        rest_request = int(params['num_tw']) % 180
+        num_request_with_max_results = int(params['num_tw']) // 100
+        rest_request = int(params['num_tw']) % 100
 
         for i in range(num_request_with_max_results):
             job = JobService.instance_job_without_results(params, user)
-            job.num_tw = 180
+            job.num_tw = 100
             JobService.create(job)
 
         job_rest = JobService.instance_job_without_results(params, user)
