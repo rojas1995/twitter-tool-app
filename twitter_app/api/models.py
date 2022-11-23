@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 class Job(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    term = models.CharField(max_length=50)
+    term = models.CharField(max_length=512)
     lang = models.CharField(max_length=2)
     country = models.CharField(max_length=50)
     referenced_tweets = models.BooleanField()
@@ -29,7 +29,7 @@ class JobLog(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     job_id = models.PositiveSmallIntegerField()
-    term = models.CharField(max_length=50)
+    term = models.CharField(max_length=512)
     lang = models.CharField(max_length=2)
     country = models.CharField(max_length=50)
     referenced_tweets = models.BooleanField()
