@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 
 
 class APIForm(forms.Form):
-    term = forms.CharField(max_length=50,
+    term = forms.CharField(max_length=512,
                            widget=forms.TextInput(attrs={'placeholder': 'term', 'id': 'term'}))
 
     lang = forms.CharField(max_length=2, required=False,
