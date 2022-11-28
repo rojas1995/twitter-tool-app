@@ -16,7 +16,26 @@ Twitter app
 {% endblock %}
 
 {% block content %}
+<style>
+.divTitleCustom {
+text-align: center;
+  }
+.h1Custom {
+font-size: 50px;
+color: black;
+}
+
+</style>
+<div class="divTitleCustom">
+<h1 class="h1Custom">Welcome to the Twitter APP</h1>
+
+<br>
+<h1>The tool for extracting tweets through twitter API, in an easy way.</h1>
+<h2>Please log in to access:</h2>
+    <br>
 <a href="{% url 'admin:login' %}">
 <input type="submit" name="Login button" value="Login >">
 </a>
+    </div>
+
 {% endblock %}
