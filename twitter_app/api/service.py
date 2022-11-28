@@ -26,13 +26,13 @@ class ApiService():
         if response.status_code != 200:
             raise Exception(response.status_code, response.text)
 
-        ''' write response json on file to debug
+        ''' write response json on file to debug'''
         response_json = json.dumps(response.json(), indent=4, sort_keys=True)
         
         with open('response.txt', 'w') as handle:
             handle.write(response_json)
             handle.write('===========================================')
-            handle.write('\n')'''
+            handle.write('\n')
         return response
 
     def do_request(job):
@@ -70,10 +70,12 @@ class ApiService():
             job = JobService.instance_job_without_results(params, user)
             job.num_tw = 180
             JobService.create(job)
+            ApiService.do_request(job)
 
         job_rest = JobService.instance_job_without_results(params, user)
         job_rest.num_tw = rest_request
         JobService.create(job_rest)
+        ApiService.do_request(job_rest)
 
 
 class JobService():

@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-m7$yl6zmfvbs6%3f53!pm7ddstr$&guw0_(1-&2in+xvnoaz5c
 DEBUG = True
 
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -131,5 +131,5 @@ LOGIN_URL = '/admin/login/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRONJOBS = [
-    ('15 * * * *', 'twitter_app.cron.scheduled_job')
+    ('1 * * * *', 'twitter_app.cron.scheduled_job')
 ]

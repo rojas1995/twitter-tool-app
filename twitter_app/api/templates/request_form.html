@@ -2,41 +2,50 @@
 {% block content %}
 <form action="{% url 'Data Form View' %}" method="POST" autocomplete="on">
     {% csrf_token %}
-
-    <label>Termino de busqueda</label>
+    <label>Search Term</label>
     {{ form.term }}
     <strong style="color: red">{{form.term.errors }}</strong>
 
-    <h2>Terminos opcionales</h2>
-    <label>Pais</label>
+    <h2>Optional Parameters</h2>
+    <label>Country</label>
 
 
     {{form.country}}
     <strong style="color: red">{{form.country.errors }}</strong>
     <br>
-    <label>idioma</label>
+    <br>
+    <label>Language</label>
     {{form.lang}}
     <strong style="color: red">{{form.lang.errors }}</strong>
     <br>
-    <label>twits referenciados</label>
+    <br>
+    <label>Include referenced tweets</label>
     {{form.referenced_tweets}}
     <br>
-    <label>fuente del tweet</label>
+    <br>
+    <label>Include source</label>
     {{form.source}}
     <br>
-    <label>place information</label>
+    <br>
+    <label>Include place information</label>
     {{form.place}}
     <br>
-    <label>number of tweets that will be collected (min 10, max 10.000)</label>
+    <br>
+    <label>Number of tweets that will be collected (min 10, max 10.000)</label>
     {{form.num_tw}}
     <strong style="color: red">{{form.num_tw.errors }}</strong>
     <br>
-    <label>priority of search (1 higher, 5 lower)</label>
+    <br>
+    <label>Priority of search (1 higher, 5 lower)</label>
     {{form.priority}}
     <strong style="color: red">{{form.priority.errors }}</strong>
+    <br>
     <br>
 
     <input type="submit" name="send" value="send">
 
 </form>
+
+    <h3>*Note: On this form you can specify the term and the parameters to query the twitter API and the results will be send to the analysis tool</h3>
+
 {% endblock %}
