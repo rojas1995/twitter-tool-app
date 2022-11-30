@@ -25,6 +25,8 @@ class Job(models.Model):
         ordering = ['priority', 'create_at']
 
 
+
+
 class JobLog(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 

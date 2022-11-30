@@ -31,11 +31,26 @@ color: black;
 
 <br>
 <h1>The tool for extracting tweets through twitter API, in an easy way.</h1>
-<h2>Please log in to access:</h2>
+
+
+{% if user.is_authenticated %}
+    <h2>Start querying:</h2>
+    <br>
+    <a href="{% url 'Data Form View' %}">
+<input type="submit" name="Quey form" value="Quey form >">
+</a>
+    <br>
+    <h2>Go to the dashboard and see your querys:</h2>
+    <br>
+        <a href="{% url 'admin:index' %}">
+<input type="submit" name="Dashboard" value="Dashboard >">
+</a>
+{% else %}
+    <h2>Please log in to access the app:</h2>
     <br>
 <a href="{% url 'admin:login' %}">
 <input type="submit" name="Login button" value="Login >">
 </a>
     </div>
-
+{% endif %}
 {% endblock %}

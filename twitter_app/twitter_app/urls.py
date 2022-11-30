@@ -23,10 +23,8 @@ urlpatterns = [
     path('auth/', include('django.contrib.auth.urls')),
     path('auth/login', login),
     path('admin/', admin.site.urls),
-    path('', views.GetAPIData.as_view(template_name='home.html'), name='home'),
-    path('jobs/', views.GetAPIData.as_view(template_name='data_view.html'), name='Data View'),
+    path('', views.HomeView.as_view(template_name='home.html'), name='home'),
     path('form/', views.GetForm.as_view(template_name='request_form.html'), name='Data Form View'),
-    path('success/', views.GetForm.as_view(template_name='success_form.html'), name='success')
 
 ]
 

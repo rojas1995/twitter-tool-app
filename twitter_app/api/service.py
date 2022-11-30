@@ -65,23 +65,40 @@ class ApiService():
     def schedule_request(params, user):
         num_request_with_max_results = int(params['num_tw']) // 100
         rest_request = int(params['num_tw']) % 100
-
         for i in range(num_request_with_max_results):
             job = JobService.instance_job_without_results(params, user)
             job.num_tw = 100
             JobService.create(job)
-            ApiService.do_request(job)
 
-        job_rest = JobService.instance_job_without_results(params, user)
-        job_rest.num_tw = rest_request
-        JobService.create(job_rest)
-        ApiService.do_request(job_rest)
+        if rest_request !=0:
+            job_rest = JobService.instance_job_without_results(params, user)
+            job_rest.num_tw = rest_request
+            JobService.create(job_rest)
+    def schedule_request_job(job):
+        print(job.num_tw)
+        num_request_with_max_results = int(job.num_tw) // 100
+        rest_request = int(job.num_tw) % 100
+        for i in range(num_request_with_max_results):
+            job_aux = models.Job(user=job.user, term=job.term, country=job.country, lang=job.lang,
+                         place=job.place, priority=job.priority,
+                         referenced_tweets=job.referenced_tweets, source=job.source)
+            job_aux.num_tw = 100
+            JobService.create(job_aux)
+
+        if rest_request !=0:
+            job_rest = models.Job(user=job.user, term=job.term, country=job.country, lang=job.lang,
+                         place=job.place, priority=job.priority,
+                         referenced_tweets=job.referenced_tweets, source=job.source)
+            job_rest.num_tw = rest_request
+            JobService.create(job_rest)
+
 
 
 class JobService():
     def create(job: models.Job):
         job.full_clean()
         job.save()
+
 
     def instance_job_without_results(params, user):
         job = models.Job(user=user, term=params['term'], country=params['country'], lang=params['lang'],
@@ -130,12 +147,12 @@ class PubSubService():
         if not exists:
             topic_path = publisher.topic_path(project_id, 'twitter_messages')
             topic = publisher.create_topic(request={"name": topic_path})
-            print(f"created topic: "+topic.name)
+            #print(f"created topic: "+topic.name)
 
     def publish(message):
         project_id = os.getenv('APPLICATION_ID')
         publisher = pubsub_v1.PublisherClient()
         topic_path = publisher.topic_path(project_id, 'twitter_messages')
         future = publisher.publish(topic_path, message)
-        print("messages published: "+future.result())
+        #print("messages published: "+future.result())
 

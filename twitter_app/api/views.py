@@ -16,15 +16,8 @@ def error_404_view(request, exception):
 
 
 class HomeView(TemplateView):
+
     template_name = 'home.html'
-
-class GetAPIData(TemplateView):
-    template_name = 'data_view.html'
-
-    def get(self, request, *args, **kwargs):
-        job = JobService.get_next_job()
-        return render(request, self.template_name, {'data': job})
-
 
 @method_decorator(login_required, name='dispatch')
 class GetForm(generic.FormView):
@@ -34,10 +27,9 @@ class GetForm(generic.FormView):
     def form_valid(self, form):
         user = self.request.user
         data = form.cleaned_data
-
         ApiService.schedule_request(data, user)
-        return redirect('success')
+
+        return redirect('../admin/api/job/')
 
 
-class Success(generic.TemplateView):
-    template_name = 'success_form.html'
+
